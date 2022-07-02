@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import CardList from "./CardList";
-import { robolist } from "./RoboList";
 import SearchBox from "./SearchBox";
 
 class App extends Component {
     constructor() {
         super()
         this.state = {
-            robolist: robolist,
+            robolist: [],
             searchinput: ''
         }
+    }
+
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response=> response.json())
+        .then(user => {this.setState({robolist: user})});
     }
 
     OnSearchUpdate = (event) => {
@@ -22,15 +27,21 @@ class App extends Component {
                 return robolist.name.toLowerCase().includes(this.state.searchinput.toLowerCase())
             }
         )
-        return(
-            <div className="tc bg-light-green">
-                <h1>
-                    <img alt='Crescentek' src= "https://www.crescentek.com/_next/image/?url=%2Fimages%2Flogo-crescentek-white1.png&w=640&q=75" />
-                </h1>
-                <SearchBox searchChange = {this.OnSearchUpdate}/>
-                <CardList robolist={refinedresult}/>
-            </div>
-        )
+        if (this.state.robolist.length === 0) {
+            return <div className="tc">
+                     <h1>Loading...</h1>
+                   </div>
+        } else  {
+            return(
+                <div className="tc">
+                    <h1>
+                        <img alt='Crescentek' src= "https://www.crescentek.com/_next/image/?url=%2Fimages%2Flogo-crescentek-white1.png&w=640&q=75" />
+                    </h1>
+                    <SearchBox searchChange = {this.OnSearchUpdate}/>
+                    <CardList robolist={refinedresult}/>
+                </div>
+            );
+        }           
     }
  }
 
