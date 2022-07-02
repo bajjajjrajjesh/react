@@ -23,12 +23,13 @@ class App extends Component {
     }
 
     render() {
-        const refinedresult = this.state.robolist.filter(
+        const { robolist, searchinput } = this.state
+        const refinedresult = robolist.filter(
             robolist =>{
-                return robolist.name.toLowerCase().includes(this.state.searchinput.toLowerCase())
+                return robolist.name.toLowerCase().includes(searchinput.toLowerCase())
             }
         )
-        if (this.state.robolist.length === 0) {
+        if (!robolist.length) {
             return <div className="tc">
                      <h1>Loading...</h1>
                    </div>
