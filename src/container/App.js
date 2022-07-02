@@ -36,7 +36,7 @@ class App extends Component {
                    </div>
         } else  {
             return(
-                <div className="tc">
+                <div className="tc bg-light-green">
                     <h1>
                         <img alt='Crescentek' src= "https://www.crescentek.com/_next/image/?url=%2Fimages%2Flogo-crescentek-white1.png&w=640&q=75" />
                     </h1>
