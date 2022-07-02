@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import CardList from "./CardList";
+import { robolist } from "./RoboList";
+import SearchBox from "./SearchBox";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            robolist: robolist,
+            searchinput: ''
+        }
+    }
+
+    OnSearchUpdate = (event) => {
+        this.setState({searchinput: event.target.value})
+    }
+
+    render() {
+        const refinedresult = this.state.robolist.filter(
+            robolist =>{
+                return robolist.name.toLowerCase().includes(this.state.searchinput.toLowerCase())
+            }
+        )
+        return(
+            <div className="tc bg-light-green">
+                <h1>
+                    <img alt='Crescentek' src= "https://www.crescentek.com/_next/image/?url=%2Fimages%2Flogo-crescentek-white1.png&w=640&q=75" />
+                </h1>
+                <SearchBox searchChange = {this.OnSearchUpdate}/>
+                <CardList robolist={refinedresult}/>
+            </div>
+        )
+    }
+ }
 
 export default App;
